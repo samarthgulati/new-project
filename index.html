@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>New Project</title>
+	<link rel="stylesheet" href="./style.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js" ntegrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+	<script src="./script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+	<style>
+		* {margin : 0; padding : 0}
+		body {
+			--wheelColor: #e6e1d7;
+			background : var(--wheelColor);
+			font-family : 'Fira Code', monospace;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height : 100vh;
+		}
+		.container {
+			max-width  : 700px;
+			margin     : auto;
+			transform-origin: 50% 50%;
+			transform: scale(2);
+		}
+		.container h1 {
+			font-size  : 50px;
+			text-align : center;
+		}
+		.container h1 small {
+			font-size : 20px;
+		}
+		hr {margin : 30px}
+		.demo {
+			margin         : 0 20px;
+			padding-bottom : 50px;
+
+		}
+		h4 {
+			text-transform: uppercase;
+			text-align: center;
+			font-weight: 100;
+			font-size: 0.75rem;
+			letter-spacing: 0.175rem;
+			opacity: 0.45;
+			color: #5d5041;
+		}
+		div[id^=lock] {
+			text-align : center;
+		}
+		@keyframes alta {
+			0% {transform : rotate(-15deg)}
+			100% {transform : rotate(15deg)}
+		}
+		.lock {
+			font-family: monospace;
+			--wheelColor: #e6e1d7;
+			margin-right: -30px;
+    		margin-bottom: -60px;
+			opacity: 0.95;
+		}
+
+		.lock .wheel .wheel__inner .wheel__segment {
+			border-radius: 5%;
+			/* box-shadow: 0px 0 4px -2px inset #d4767633, 1px 0 0px inset #d4767633, -1px 0 0px inset #d4767633; */
+			box-shadow: none;
+		}
+		.lock .wheel .wheel__inner .wheel__segment span {
+			background-color: #bb9165;
+		}
+
+		canvas {
+			position: absolute;
+			left: 0;
+			top: 0;
+			pointer-events: none;
+		}
+		.container {
+			transition: transform 1000ms ease-out;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+		}
+		.container.animate {
+			transform: scale(2) translate(0, -200%);
+		}
+		#message {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			opacity: 0;
+			transform: translate(0, 100%);
+			transition: all 1500ms ease-out;
+			font-size: 2rem;
+			/* text-transform: uppercase; */
+			text-align: center;
+			opacity: 0;
+			color: #5d5041;
+		}
+		#message > p {
+			text-transform: uppercase;
+		}
+		#message > p:first-of-type {
+			font-size: 1rem;
+    		letter-spacing: 0.25rem;
+		}
+		#message > p:last-of-type {
+			font-size: 1.75rem;
+		}
+		#message.animate {
+			opacity: 1;
+			transform: translate(0, 0);
+		}
+		button {
+			background: none;
+			border: none;
+			margin-top: 2rem;
+		}
+		button > svg {
+			width: 2rem;
+			height: 2rem;
+		}
+		@keyframes shake {
+			0% {
+				transform: translateX(0rem);
+			}
+			25% {
+				transform: translateX(0.5rem);
+			}
+			75% {
+				transform: translateX(-0.5rem);
+			}
+			100% {
+				transform: translateX(0rem);
+			}
+		}
+		button.animate {
+			animation: shake 0.2s ease-in-out 0s 2;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="demo">
+		<div id="lock1"></div>
+	</div>
+	<h4>Year of birth</h4>
+	<button id="btn">
+		<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512">
+			<circle cx="50%" cy="50%" r="50%" fill="#5d5041" opacity="0.25"></circle>
+			<path d="M128,280 L256,200 L384,280" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="#e6e1d7"></path>
+		</svg>
+	</button>
+</div>
+<div id="message"></div>
+<script>
+	const codes = [
+		{
+			code: '1957',
+			message: 'Dadu'
+		},
+		{
+			code: '1966',
+			message: 'Dadi'
+		},
+		{
+			code: '1983',
+			message: 'Fufu'
+		},
+		{
+			code: '1989',
+			message: 'Bua'
+		},
+		{
+			code: '1959',
+			message: 'Nanu'
+		},
+		{
+			code: '1966',
+			message: 'Dadi'
+		},
+		{
+			code: '1983',
+			message: 'Fufu'
+		},
+		{
+			code: '1989',
+			message: 'Bua'
+		}
+	]
+	const btn = document.querySelector('#btn');
+	var myCanvas = document.createElement('canvas');
+	myCanvas.width = window.innerWidth
+	myCanvas.height = window.innerHeight
+	document.body.appendChild(myCanvas);
+
+	var myConfetti = confetti.create(myCanvas, {
+		resize: true,
+		useWorker: true,
+	});
+	const container = document.querySelector('.container')
+	const message = document.querySelector('#message')
+	var count = 500;
+	var defaults = {
+		origin: { y: 1.05 },
+		colors: ['#e24e00', '#ffffff']
+
+	};
+
+	function fire(particleRatio, opts) {
+		myConfetti(Object.assign({}, defaults, opts, {
+			particleCount: Math.floor(count * particleRatio)
+		}));
+	}
+
+	function revealMessage(msg) {
+		container.classList.add('animate');
+		message.innerHTML = `👋🏼<br>Hi ${msg}!<br><br><p style="font-size: 0.95rem">See you</p><p>May 2024</p>`;
+		message.classList.add('animate')
+		container.addEventListener('transitionend', () => {
+			fire(0.25, {
+				spread: 26,
+				startVelocity: 55,
+			});
+				fire(0.2, {
+				spread: 60,
+			});
+			fire(0.35, {
+				spread: 100,
+				decay: 0.91,
+				scalar: 0.8
+			});
+			fire(0.1, {
+				spread: 120,
+				startVelocity: 25,
+				decay: 0.92,
+				scalar: 1.2
+			});
+			fire(0.1, {
+				spread: 120,
+				startVelocity: 45,
+			});
+		})
+	}
+	const lock = new Lock({
+		id : "lock1", // hide
+		diameter : 100,
+		wheels   : 4,
+		items    : 10,
+		timeout  : 1000,
+	});
+	btn.addEventListener('click', () => {
+		let code = lock.getCode();
+		code = code.join('')
+		const index = codes.findIndex(c => c.code == code)
+		if(index > -1) {
+			revealMessage(codes[index].message)
+		} else {
+			btn.classList.add('animate')
+			setTimeout(_ => {
+				btn.classList.remove('animate')
+			}, 1000)
+		}
+	})
+	lock.shuffle();
+
+</script>
+</body>
+</html>
