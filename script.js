@@ -132,7 +132,7 @@ class Lock {
 		let p          = e.clientY || e.touches[0].clientY;
 
 		let d = this.clickPosition - p;
-		if (Math.abs(d) > 2) d = this.clickPosition > p;
+		if (Math.abs(d) > 1) d = this.clickPosition > p;
 		else d = e.button !== 2;
 		let direction = d ? 1 : -1;
 
