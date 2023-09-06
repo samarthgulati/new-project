@@ -129,6 +129,8 @@
 			background: none;
 			border: none;
 			margin-top: 2rem;
+			width: min-content;
+			align-self: center;
 		}
 		button:hover,
 		button:focus,
@@ -217,7 +219,7 @@
 
 	var myConfetti = confetti.create(myCanvas, {
 		resize: true,
-		useWorker: true,
+		useWorker: false,
 	});
 	const container = document.querySelector('.container')
 	const message = document.querySelector('#message')
