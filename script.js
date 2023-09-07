@@ -307,7 +307,7 @@ class Lock {
 	 * let lock = new Lock();
 	 * lock.shuffle(50,150,1000);
 	 */
-	shuffle(min = [1,-2,1,1], max = [2,-1,10,10], time = 2500) {
+	shuffle(min = [1,8,1,1], max = [2,9,10,10], time = 750) {
 		if (this.onTimeout) return;
 		this.onTimeout = true;
 		let old        = getComputedStyle(this.lock).getPropertyValue('--rotationSpeed');
@@ -320,8 +320,9 @@ class Lock {
 
 			this.rotate[n] = this.angle * spin * direction;
 
-			this.lock.querySelector('.wheel:nth-child(' + (n + 1) + ') .wheel__inner').style.transform = 'rotateX(' + this.rotate[n] + 'deg)';
-
+			const wheel = this.lock.querySelector('.wheel:nth-child(' + (n + 1) + ') .wheel__inner');
+			wheel.style.transform = 'rotateX(' + this.rotate[n] + 'deg)';
+			wheel.style.transitionDelay = `${n*time}ms`;
 			let t = spin % this.options.items;
 			if (direction === 1) t = (this.options.items - t) % this.options.items;
 			this.actualCode[n] = t;
@@ -330,6 +331,7 @@ class Lock {
 		setTimeout(() => {
 			this.onTimeout = false;
 			this.lock.style.setProperty('--rotationSpeed', old);
+			document.body.querySelectorAll('.wheel__inner').forEach(el => {el.style.transitionDelay = '0ms'});
 		}, time);
 
 		return this.getCode();
