@@ -229,7 +229,7 @@
 		},
 		{
 			code: '1959',
-			message: 'Nanu'
+			message: urlParams.has('testing') ? 'Friend Nanu' : 'Nanu'
 		},
 		{
 			code: '1961',
@@ -241,8 +241,16 @@
 		},
 		{
 			code: '1992',
-			message: 'Mami'
-		}
+			message: urlParams.has('testing') ? 'Friend mami' : 'Mami'
+		},
+		{
+			code: '1969',
+			message: 'Friend Nani'
+		},
+		{
+			code: '1993',
+			message: 'Friend Mamu'
+		},
 	]
 	const btn = document.querySelector('#btn');
 	var myCanvas = document.createElement('canvas');
